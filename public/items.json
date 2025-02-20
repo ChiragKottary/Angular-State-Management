@@ -1,0 +1,95 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "name": "Organic Bananas",
+        "category": "Fruits",
+        "price": 2.99,
+        "quantity": 100,
+        "description": "Fresh organic bananas",
+        "imageUrl": "https://wallpaperaccess.com/full/3385210.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Almonds",
+        "category": "Nuts",
+        "price": 8.99,
+        "quantity": 200,
+        "description": "High-quality almonds",
+        "imageUrl": "https://www.aahaarexpert.com/wp-content/uploads/2018/01/almond-1024x1024.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Avocados",
+        "category": "Fruits",
+        "price": 1.99,
+        "quantity": 150,
+        "description": "Ripe, fresh avocados",
+        "imageUrl": "https://example.com/avocados.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Organic Carrots",
+        "category": "Vegetables",
+        "price": 1.49,
+        "quantity": 120,
+        "description": "Fresh organic carrots",
+        "imageUrl": "https://example.com/carrots.jpg"
+      },
+      {
+        "id": 5,
+        "name": "Strawberries",
+        "category": "Fruits",
+        "price": 3.49,
+        "quantity": 100,
+        "description": "Fresh strawberries",
+        "imageUrl": "https://example.com/strawberries.jpg"
+      },
+      {
+        "id": 6,
+        "name": "Cashews",
+        "category": "Nuts",
+        "price": 7.99,
+        "quantity": 250,
+        "description": "Roasted cashews",
+        "imageUrl": "https://example.com/cashews.jpg"
+      },
+      {
+        "id": 7,
+        "name": "Organic Kale",
+        "category": "Vegetables",
+        "price": 2.79,
+        "quantity": 80,
+        "description": "Fresh organic kale",
+        "imageUrl": "https://example.com/kale.jpg"
+      },
+      {
+        "id": 8,
+        "name": "Cucumber",
+        "category": "Vegetables",
+        "price": 1.29,
+        "quantity": 150,
+        "description": "Fresh cucumbers",
+        "imageUrl": "https://www.freshpoint.com/wp-content/uploads/2020/02/freshpoint-english-cucumber-scaled.jpg"
+      },
+      {
+        "id": 9,
+        "name": "Tomatoes",
+        "category": "Vegetables",
+        "price": 2.19,
+        "quantity": 200,
+        "description": "Fresh tomatoes",
+        "imageUrl": "https://example.com/tomatoes.jpg"
+      },
+      {
+        "id": 10,
+        "name": "Blueberries",
+        "category": "Fruits",
+        "price": 4.99,
+        "quantity": 50,
+        "description": "Fresh blueberries",
+        "imageUrl": "https://example.com/blueberries.jpg"
+      }
+    ]
+  }
+  
