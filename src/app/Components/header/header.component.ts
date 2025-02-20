@@ -3,15 +3,19 @@ import { AddItemComponent } from '../items/add-item/add-item.component';
 
 @Component({
   selector: 'app-header',
-  imports: [AddItemComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-  standalone: true
+  styleUrls: ['./header.component.css'],
+  standalone: true,
+  imports: [AddItemComponent]
 })
 export class HeaderComponent {
-  addProduct: boolean = false;
+  showAddModal: boolean = false;
 
-  handleAddProduct() {
-    this.addProduct = true;
+  handleAddProduct(): void {
+    this.showAddModal = true;
+  }
+
+  onModalClosed(): void {
+    this.showAddModal = false;
   }
 }

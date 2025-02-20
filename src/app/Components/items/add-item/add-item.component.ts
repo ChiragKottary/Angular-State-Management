@@ -23,13 +23,13 @@ export class AddItemComponent {
   @Output() itemUpdated = new EventEmitter<void>();
   
   newItem: Item = {
-    id: uuidv4(),
-    name: "",
-    category: "",
+    id: '',
+    name: '',
+    category: '',
     price: 0,
     quantity: 0,
-    description: "",
-    imageUrl: ""
+    description: '',
+    imageUrl: ''
   }
 
   private modal: any;
@@ -38,10 +38,6 @@ export class AddItemComponent {
 
   async handleSubmit() {
     try {
-      if (!this.editMode) {
-        this.newItem.id = uuidv4();
-      }
-      
       if (this.editMode) {
         await this.itemsService.updateItem(this.newItem);
         this.itemUpdated.emit();
@@ -59,13 +55,13 @@ export class AddItemComponent {
 
       // Reset form
       this.newItem = {
-        id: uuidv4(),
-        name: "",
-        category: "",
+        id: '',
+        name: '',
+        category: '',
         price: 0,
         quantity: 0,
-        description: "",
-        imageUrl: ""
+        description: '',
+        imageUrl: ''
       };
     } catch (error) {
       console.error('Error saving item:', error);

@@ -5,13 +5,16 @@
         <h1 class="mb-0">Grocery Store</h1>
       </div>
       <div class="col-md-6 text-md-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal" (click)="handleAddProduct()">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
           <i class="fas fa-plus me-2"></i>Add Product
         </button>
       </div>
     </div>
   </div>
 </header>
-@if(addProduct){
-  <app-add-item ></app-add-item>
-}
+
+<app-add-item 
+  *ngIf="showAddModal"
+  [editMode]="false"
+  (itemAdded)="onModalClosed()">
+</app-add-item>
