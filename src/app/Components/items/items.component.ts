@@ -1,44 +1,53 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+declare var bootstrap: any;
 import { ItemComponent } from "./item/item.component";
-
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-  description: string;
-  imageUrl: string;
-}
+import { AddItemComponent } from './add-item/add-item.component';
+import { ItemsService, Item } from './services/items.service';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css'],
-  imports: [CommonModule, ItemComponent]
+  imports: [CommonModule, ItemComponent, AddItemComponent],
+  standalone: true
 })
 export class ItemsComponent {
-  products: Product[] = [];
+  products: Item[] = [];
+  selectedProduct: Item | null = null;
 
-  constructor() {
+  constructor(private itemsService: ItemsService) {
     this.loadProducts();
   }
 
-  private loadProducts(): void {
-    fetch('items.json')
-      .then(response => response.json())
-      .then(data => {
-        this.products = data.products;
-      })
-      .catch(error => console.error('Error loading products:', error));
+  async loadProducts(): Promise<void> {
+    try {
+      this.products = await this.itemsService.getItems();
+    } catch (error) {
+      console.error('Error loading products:', error);
+    }
   }
 
-  deleteProduct(id: number): void {
-    this.products = this.products.filter(product => product.id !== id);
+  async deleteProduct(id: number): Promise<void> {
+    try {
+      await this.itemsService.deleteItem(id);
+      await this.loadProducts();
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
   }
 
   editProduct(id: number): void {
-    console.log('Editing product:', id);
+    this.selectedProduct = this.products.find(p => p.id === id) || null;
+    const modal = document.getElementById('editProductModal');
+    if (modal) {
+      const bootstrapModal = new bootstrap.Modal(modal);
+      bootstrapModal.show();
+    }
+  }
+
+  onItemUpdated(): void {
+    this.loadProducts();
+    this.selectedProduct = null;
   }
 }

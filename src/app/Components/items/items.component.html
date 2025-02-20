@@ -9,3 +9,10 @@
     </div>
   </div>
 </div>
+
+<app-add-item 
+  [editMode]="!!selectedProduct"
+  [editItem]="selectedProduct"
+  (itemAdded)="loadProducts()"
+  (itemUpdated)="onItemUpdated()">
+</app-add-item>
