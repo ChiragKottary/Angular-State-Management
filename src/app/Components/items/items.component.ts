@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ItemComponent } from "./item/item.component";
 import { AddItemComponent } from './add-item/add-item.component';
 import { ItemsService, Item } from './services/items.service';
+import { Observable } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -14,47 +15,47 @@ declare var bootstrap: any;
   standalone: true
 })
 export class ItemsComponent implements OnInit {
-  products: Item[] = [];
+  products$: Observable<Item[]>;
   selectedProduct: Item | null = null;
 
-  constructor(private itemsService: ItemsService) {}
-
-  ngOnInit(): void {
-    this.loadProducts();
+  constructor(private itemsService: ItemsService) {
+    this.products$ = this.itemsService.items$;
   }
 
-  async loadProducts(): Promise<void> {
-    try {
-      this.products = await this.itemsService.getItems();
-    } catch (error) {
-      console.error('Error loading products:', error);
-    }
-  }
+  ngOnInit(): void {}
 
-  async deleteProduct(id: string): Promise<void> {
-    try {
-      await this.itemsService.deleteItem(id);
-      await this.loadProducts();
-    } catch (error) {
-      console.error('Error deleting product:', error);
-    }
+  deleteProduct(id: string): void {
+    this.itemsService.deleteItem(id).subscribe({
+      error: error => console.error('Error deleting product:', error)
+    });
   }
 
   editProduct(id: string): void {
-    this.selectedProduct = this.products.find(p => p.id === id) || null;
-    if (this.selectedProduct) {
-      const modal = document.getElementById('editProductModal');
-      if (modal) {
-        const bootstrapModal = new bootstrap.Modal(modal);
-        bootstrapModal.show();
+    this.products$.subscribe(products => {
+      this.selectedProduct = products.find(p => p.id === id) || null;
+      if (this.selectedProduct) {
+        const modal = document.getElementById('editProductModal');
+        if (modal) {
+          const bootstrapModal = new bootstrap.Modal(modal);
+          bootstrapModal.show();
+        }
+      }
+    });
+  }
+
+  onItemUpdated(): void {
+    this.selectedProduct = null;
+    const modal = document.getElementById('editProductModal');
+    if (modal) {
+      const bootstrapModal = bootstrap.Modal.getInstance(modal);
+      if (bootstrapModal) {
+        bootstrapModal.hide();
       }
     }
   }
 
-  onItemUpdated(): void {
-    this.loadProducts();
-    this.selectedProduct = null;
-    const modal = document.getElementById('editProductModal');
+  onItemAdded(): void {
+    const modal = document.getElementById('addProductModal');
     if (modal) {
       const bootstrapModal = bootstrap.Modal.getInstance(modal);
       if (bootstrapModal) {

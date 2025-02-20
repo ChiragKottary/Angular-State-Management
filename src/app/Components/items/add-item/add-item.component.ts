@@ -22,49 +22,59 @@ export class AddItemComponent {
   @Output() itemAdded = new EventEmitter<void>();
   @Output() itemUpdated = new EventEmitter<void>();
   
-  newItem: Item = {
-    id: '',
-    name: '',
-    category: '',
-    price: 0,
-    quantity: 0,
-    description: '',
-    imageUrl: ''
-  }
-
-  private modal: any;
+  newItem: Item = this.getEmptyItem();
 
   constructor(private itemsService: ItemsService) {}
 
-  async handleSubmit() {
-    try {
-      if (this.editMode) {
-        await this.itemsService.updateItem(this.newItem);
-        this.itemUpdated.emit();
-      } else {
-        await this.itemsService.addItem(this.newItem);
-        this.itemAdded.emit();
-      }
-      
-      // Close the modal
-      const modalElement = document.getElementById(this.editMode ? 'editProductModal' : 'addProductModal');
-      if (modalElement) {
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        modal?.hide();
-      }
+  private getEmptyItem(): Item {
+    return {
+      id: uuidv4(), // Generate ID when creating empty item
+      name: '',
+      category: '',
+      price: 0,
+      quantity: 0,
+      description: '',
+      imageUrl: ''
+    };
+  }
 
-      // Reset form
-      this.newItem = {
-        id: '',
-        name: '',
-        category: '',
-        price: 0,
-        quantity: 0,
-        description: '',
-        imageUrl: ''
-      };
-    } catch (error) {
-      console.error('Error saving item:', error);
+  private closeModal() {
+    const modalElement = document.getElementById(this.editMode ? 'editProductModal' : 'addProductModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) {
+        modal.hide();
+      }
     }
+  }
+
+  handleSubmit() {
+    if (this.editMode) {
+      this.itemsService.updateItem(this.newItem).subscribe({
+        next: () => {
+          this.itemUpdated.emit();
+          this.closeModal();
+          this.resetForm();
+        },
+        error: error => {
+          console.error('Error updating item:', error);
+          // Add user feedback here
+        }
+      });
+    } else {
+      // No need to generate ID here as it's already set
+      this.itemsService.addItem(this.newItem).subscribe({
+        next: () => {
+          this.itemAdded.emit();
+          this.closeModal();
+          this.resetForm();
+        },
+        error: error => console.error('Error adding item:', error)
+      });
+    }
+  }
+
+  private resetForm() {
+    this.newItem = this.getEmptyItem(); // Use the helper method here too
   }
 }
