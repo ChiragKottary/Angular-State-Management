@@ -1,19 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-interface Item {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-  description: string;
-  imageUrl: string;
-}
+import { CommonModule } from '@angular/common';
+import { Item } from '../services/items.service';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  styleUrls: ['./item.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class ItemComponent {
   @Input() product!: Item;

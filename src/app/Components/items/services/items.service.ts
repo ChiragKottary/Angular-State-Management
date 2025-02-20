@@ -20,6 +20,9 @@ export class ItemsService {
 
   async getItems(): Promise<Item[]> {
     const response = await fetch(this.apiUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch items');
+    }
     return response.json();
   }
 
@@ -31,6 +34,9 @@ export class ItemsService {
       },
       body: JSON.stringify(item),
     });
+    if (!response.ok) {
+      throw new Error('Failed to add item');
+    }
     return response.json();
   }
 
@@ -42,13 +48,18 @@ export class ItemsService {
       },
       body: JSON.stringify(item),
     });
+    if (!response.ok) {
+      throw new Error('Failed to update item');
+    }
     return response.json();
   }
 
   async deleteItem(id: string): Promise<void> {
-    await fetch(`${this.apiUrl}/${id}`, {
+    const response = await fetch(`${this.apiUrl}/${id}`, {
       method: 'DELETE',
     });
-    console.log(id);
+    if (!response.ok) {
+      throw new Error('Failed to delete item');
+    }
   }
 }
