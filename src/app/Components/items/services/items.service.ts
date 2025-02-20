@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 export interface Item {
-  id: number;
+  id: string;
   name: string;
   category: string;
   price: number;
@@ -45,9 +45,10 @@ export class ItemsService {
     return response.json();
   }
 
-  async deleteItem(id: number): Promise<void> {
+  async deleteItem(id: string): Promise<void> {
     await fetch(`${this.apiUrl}/${id}`, {
       method: 'DELETE',
     });
+    console.log(id);
   }
 }

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ItemsService, Item } from '../services/items.service';
+import { v4 as uuidv4 } from 'uuid';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-add-item',
@@ -21,7 +23,7 @@ export class AddItemComponent {
   @Output() itemUpdated = new EventEmitter<void>();
   
   newItem: Item = {
-    id: 0,
+    id: uuidv4(),
     name: "",
     category: "",
     price: 0,
@@ -30,10 +32,16 @@ export class AddItemComponent {
     imageUrl: ""
   }
 
+  private modal: any;
+
   constructor(private itemsService: ItemsService) {}
 
   async handleSubmit() {
     try {
+      if (!this.editMode) {
+        this.newItem.id = uuidv4();
+      }
+      
       if (this.editMode) {
         await this.itemsService.updateItem(this.newItem);
         this.itemUpdated.emit();
@@ -42,9 +50,16 @@ export class AddItemComponent {
         this.itemAdded.emit();
       }
       
+      // Close the modal
+      const modalElement = document.getElementById(this.editMode ? 'editProductModal' : 'addProductModal');
+      if (modalElement) {
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal?.hide();
+      }
+
       // Reset form
       this.newItem = {
-        id: 0,
+        id: uuidv4(),
         name: "",
         category: "",
         price: 0,

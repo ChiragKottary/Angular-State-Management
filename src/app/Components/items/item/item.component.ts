@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-interface Product {
-  id: number;
+interface Item {
+  id: string;
   name: string;
   category: string;
   price: number;
@@ -16,9 +16,9 @@ interface Product {
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent {
-  @Input() product!: Product;
-  @Output() delete = new EventEmitter<number>();
-  @Output() edit = new EventEmitter<number>();
+  @Input() product!: Item;
+  @Output() delete = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<string>();
 
   onDelete(): void {
     this.delete.emit(this.product.id);

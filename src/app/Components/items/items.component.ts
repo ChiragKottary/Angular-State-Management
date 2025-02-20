@@ -28,7 +28,7 @@ export class ItemsComponent {
     }
   }
 
-  async deleteProduct(id: number): Promise<void> {
+  async deleteProduct(id: string): Promise<void> {
     try {
       await this.itemsService.deleteItem(id);
       await this.loadProducts();
@@ -37,8 +37,8 @@ export class ItemsComponent {
     }
   }
 
-  editProduct(id: number): void {
-    this.selectedProduct = this.products.find(p => p.id === id) || null;
+  editProduct(id: string): void {
+    this.selectedProduct = this.products.find((p:Item) => p.id === id) || null;
     const modal = document.getElementById('editProductModal');
     if (modal) {
       const bootstrapModal = new bootstrap.Modal(modal);
