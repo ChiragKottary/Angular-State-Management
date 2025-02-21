@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Organic Bananas",
+      "category": "Fruits",
+      "price": 2.99,
+      "quantity": 100,
+      "description": "Fresh organic bananas",
+      "imageUrl": "https://wallpaperaccess.com/full/3385210.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Avocados",
+      "category": "Fruits",
+      "price": 1.99,
+      "quantity": 155,
+      "description": "Ripe, fresh avocados",
+      "imageUrl": "https://1.bp.blogspot.com/-5uLZeRugUlk/X_gkcafjUbI/AAAAAAAAAFU/tfkgHcSvLlQQFYMT90bap538S1JwMKYjACLcBGAsYHQ/s1200/avocados-3-1200.jpg"
+    }
+  ]
+}

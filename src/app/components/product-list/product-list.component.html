@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="header-actions">
+    <h2>Products</h2>
+    <button class="add-button" (click)="showForm()" *ngIf="!isFormVisible">Add Item</button>
+  </div>
+
+  <app-product-form 
+    *ngIf="isFormVisible || selectedProduct"
+    [productToEdit]="selectedProduct"
+    [isVisible]="isFormVisible"
+    (submitProduct)="onAddProduct($event)"
+    (closeForm)="hideForm()">
+  </app-product-form>
+  
+  <div class="products-grid">
+    <div *ngFor="let product of products$ | async" class="product-card">
+      <div class="product-image-container">
+        <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+      </div>
+      <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <div class="product-meta">
+          <span class="category">{{ product.category }}</span>
+          <span class="price">${{ product.price }}</span>
+        </div>
+        <p class="stock">In Stock: {{ product.quantity }}</p>
+        <p class="description">{{ product.description }}</p>
+        <div class="actions">
+          <button class="edit-btn" (click)="onEditProduct(product)">Edit</button>
+          <button class="delete-btn" (click)="onDeleteProduct(product.id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
